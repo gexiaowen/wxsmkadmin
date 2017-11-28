@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="console/header">
+</head>
+<body>
+<section class="content-header">
+    <h1>业务管理</h1>
+</section>
+<section class="content table-content">
+    <table id="dataGrid"></table>
+</section>
+<div th:include="console/footer"></div>
+</body>
+<script type="text/javascript">
+    $table = $("#dataGrid");
+    $(function () {
+        initDataGrid();
+    });
+    function initDataGrid(){
+        $table.bootstrapTable({
+            height : tableModel.getHeight(),
+            idField : "logId",
+            columns : [[
+                {title: "问题", field: "question" },
+                {title: "业务", field: "service" },
+                {title: "子业务", field: "child" },
+                {title: "处理", field: "deal" },
+                {title: "创建用户", field: "cruser" },
+                {title: "创建时间", field: "crtime", sortable: true}
+            ]],
+            url : '/szy/szyquestion/list',
+            queryParams: function(params){
+                return params;
+            },
+            responseHandler : function (res) {
+                return {
+                    rows : res.result.pageInfo.list,
+                    total : res.result.pageInfo.total
+                }
+            },
+            search : true,
+            searchOnEnterKey : true,
+            sortName : 'crtime',
+            sortOrder : 'asc',
+            pagination : true,
+            sidePagination : 'server',
+            pageSize: 50,
+            pageList : [50, 100],
+            showRefresh : true,
+            showToggle : true
+        });
+    }
+</script>
+</html>

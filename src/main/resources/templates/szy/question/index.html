@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="console/header">
+</head>
+<body>
+<section class="content-header">
+    <h1>业务管理</h1>
+</section>
+
+<div id="toolbar">
+    <a href="/szy/question/from" class="btn btn-primary" style="display: inline-block;">添加问题</a>
+    &emsp; &emsp;
+        <select id="service" name="service" class="form-control"    style="width: 100px;display: inline-block;" >
+            <option value=""  >全部</option>
+            <option value="卡管" >卡管</option>
+            <option value="联机" >联机</option>
+            <option value="清算" >清算</option>
+            <option value="APP" >APP</option>
+            <option value="POS机" >POS机</option>
+            <option value="自助机" >自助机</option>
+        </select>
+        <input type="text" name="child" class="form-control" id="child" placeholder="子业务" style="width: 120px;display: inline-block;"/>
+        <input type="text" name="question" class="form-control" id="question" placeholder="问题名称" style="width: 200px;display: inline-block;"/>
+        <button class="btn btn-default" type="button" name="refresh" title="Refresh">查询</button>
+</div>
+
+<section class="content table-content">
+    <table id="dataGrid"></table>
+</section>
+
+<div th:include="console/footer"></div>
+</body>
+<script type="text/javascript">
+    $table = $("#dataGrid");
+    $(function () {
+        initDataGrid();
+    });
+    function initDataGrid(){
+        $table.bootstrapTable({
+            height : tableModel.getHeight(),
+            idField : "id",
+            columns : [[
+                {title: "业务", field: "service",width:'95px' },
+                {title: "子业务", field: "child" ,width:'95px'},
+                {title: "问题", field: "question" },
+                {title: "处理", field: "deal" },
+                {title: "创建用户", field: "cruser",width:'95px' },
+                {title: "创建时间", field: "crtime",width:'95px', sortable: true},
+                {title: "操作", field: "operate",width:'120px', align: 'center', events: operateEvents, formatter: operateFormatter}
+            ]],
+            url : '/szy/question/list',
+            queryParams: function (params){
+                var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                    service: ($("#service").val() == '') ? undefined : $("#service").val(),
+                    child:  ($("#child").val() == '') ? undefined : $("#child").val(),
+                    question:  ($("#question").val() == '') ? undefined : $("#question").val(),
+                    offset:params.offset,
+                    sort : params.sort,
+                    order :  params.order,
+                    limit :params.limit,
+                };
+                return temp;
+            },
+            responseHandler : function (res) {
+                return {
+                    rows : res.result.pageInfo.list,
+                    total : res.result.pageInfo.total
+                }
+            },
+            search : false,
+            searchOnEnterKey : false,
+            sortName : 'crtime',
+            sortOrder : 'desc',
+            pagination : true,
+            sidePagination : 'server',
+            pageSize: 10,
+            pageList : [10, 20, 50, 100],
+            toolbar : "#toolbar",
+            showRefresh : true,
+            showToggle : false
+        });
+    }
+
+    function operateFormatter(value, row, index) {
+//        if(row.isSystem == 0){
+            return [
+                '<a href="/szy/question/from?id='+row.id+'" >',
+                '<i class="glyphicon glyphicon-edit"></i>修改',
+                '</a>  ',
+                '<a class="remove" href="javascript:void(0);">',
+                '<i class="glyphicon glyphicon-remove"></i>删除',
+                '</a>'
+            ].join('');
+//        }
+    }
+
+    window.operateEvents = {
+        'click .remove': function (e, value, row, index) {
+            operaModel.delRow(row.id, '/szy/question/delete', 'id');
+        }
+    };
+</script>
+</html>

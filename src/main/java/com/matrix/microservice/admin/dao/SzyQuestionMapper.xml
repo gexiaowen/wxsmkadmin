@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.matrix.microservice.admin.dao.SzyQuestionMapper" >
+  <resultMap id="BaseResultMap" type="com.matrix.microservice.admin.entity.szy.SzyQuestion" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="question" property="question" jdbcType="VARCHAR" />
+    <result column="service" property="service" jdbcType="VARCHAR" />
+    <result column="child" property="child" jdbcType="VARCHAR" />
+    <result column="deal" property="deal" jdbcType="VARCHAR" />
+    <result column="cruser" property="cruser" jdbcType="VARCHAR" />
+    <result column="crtime" property="crtime" jdbcType="DATE" />
+  </resultMap>
+
+  <select id="selectSzyQuestionBySelect" parameterType="java.util.Map" resultMap="BaseResultMap">
+    SELECT id, question, service, child, deal, cruser, crtime FROM szy_question
+    where service LIKE CONCAT('%',#{service},'%') AND child LIKE CONCAT('%',#{child},'%')  and question LIKE CONCAT('%',#{question},'%')
+    order by crtime ${order}
+    limit #{offset},#{limit}
+  </select>
+
+</mapper>
