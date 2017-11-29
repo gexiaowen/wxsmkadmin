@@ -43,6 +43,7 @@ public class SzyQuestionController {
 
 
     private String sql;
+
     private String service;
     private String child;
     private String question;
