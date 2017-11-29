@@ -41,7 +41,6 @@ public class SzyQuestionController {
     @Autowired
     private SzyQuestionService szyQuestionService;
 
-
     private String sql;
 
     private String service;
