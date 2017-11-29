@@ -42,8 +42,7 @@ public class SzyQuestionController {
     private SzyQuestionService szyQuestionService;
 
 
-    private String  sql;
-
+    private String sql;
     private String service;
     private String child;
     private String question;
