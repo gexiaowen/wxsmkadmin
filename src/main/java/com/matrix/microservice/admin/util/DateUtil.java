@@ -174,7 +174,7 @@ public class DateUtil {
     public static String longToString(long date, String format) {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         // 前面的lSysTime是秒数，先乘1000得到毫秒数，再转为java.util.Date类型
-        java.util.Date dt2 = new Date(date * 1000L);
+        Date dt2 = new Date(date * 1000L);
         String sDateTime = sdf.format(dt2); // 得到精确到秒的表示：08/31/2006 21:08:00
         return sDateTime;
     }
@@ -360,9 +360,9 @@ public class DateUtil {
                 .equals(""))))
             return null;
         try {
-            java.util.Date date = ymdSDF.parse(endTime);
+            Date date = ymdSDF.parse(endTime);
             endTime = ymdSDF.format(date);
-            java.util.Date mydate = ymdSDF.parse(beginTime);
+            Date mydate = ymdSDF.parse(beginTime);
             long day = (date.getTime() - mydate.getTime())
                     / (24 * 60 * 60 * 1000);
             result = getDate(endTime, Integer.parseInt(day + ""), isEndTime);
@@ -386,9 +386,9 @@ public class DateUtil {
             return 0;
         long day = 0l;
         try {
-            java.util.Date date = ymdSDF.parse(endTime);
+            Date date = ymdSDF.parse(endTime);
             endTime = ymdSDF.format(date);
-            java.util.Date mydate = ymdSDF.parse(beginTime);
+            Date mydate = ymdSDF.parse(beginTime);
             day = (date.getTime() - mydate.getTime()) / (24 * 60 * 60 * 1000);
         } catch (Exception e) {
             return 0;

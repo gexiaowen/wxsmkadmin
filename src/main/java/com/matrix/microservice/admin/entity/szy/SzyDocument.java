@@ -3,26 +3,26 @@ package com.matrix.microservice.admin.entity.szy;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.matrix.microservice.admin.entity.BaseEntity;
 
+import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "szy_question")
-public class SzyQuestion  extends BaseEntity {
+@Table(name = "szy_document")
+public class SzyDocument extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
-    private String question;
-
-    private String service;
+    private String name;
 
     private String child;
 
-    private String deal;
+    private String ver;
+
+    private String size;
 
     private String cruser;
 
     private String crtime;
-
 
     @Transient
     @JsonIgnore
@@ -40,7 +40,6 @@ public class SzyQuestion  extends BaseEntity {
     @JsonIgnore
     private String order = "";
 
-
     /**
      * @return id
      */
@@ -56,31 +55,17 @@ public class SzyQuestion  extends BaseEntity {
     }
 
     /**
-     * @return question
+     * @return name
      */
-    public String getQuestion() {
-        return question;
+    public String getName() {
+        return name;
     }
 
     /**
-     * @param question
+     * @param name
      */
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    /**
-     * @return service
-     */
-    public String getService() {
-        return service;
-    }
-
-    /**
-     * @param service
-     */
-    public void setService(String service) {
-        this.service = service;
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
@@ -98,17 +83,31 @@ public class SzyQuestion  extends BaseEntity {
     }
 
     /**
-     * @return deal
+     * @return ver
      */
-    public String getDeal() {
-        return deal;
+    public String getVer() {
+        return ver;
     }
 
     /**
-     * @param deal
+     * @param ver
      */
-    public void setDeal(String deal) {
-        this.deal = deal;
+    public void setVer(String ver) {
+        this.ver = ver;
+    }
+
+    /**
+     * @return size
+     */
+    public String getSize() {
+        return size;
+    }
+
+    /**
+     * @param size
+     */
+    public void setSize(String size) {
+        this.size = size;
     }
 
     /**
@@ -173,14 +172,15 @@ public class SzyQuestion  extends BaseEntity {
 
     @Override
     public String toString() {
-        return "SzyQuestion{" +
+        return "SzyDocument{" +
                 "id='" + id + '\'' +
-                ", question='" + question + '\'' +
-                ", service='" + service + '\'' +
+                ", name='" + name + '\'' +
                 ", child='" + child + '\'' +
-                ", deal='" + deal + '\'' +
+                ", ver='" + ver + '\'' +
+                ", size='" + size + '\'' +
                 ", cruser='" + cruser + '\'' +
                 ", crtime='" + crtime + '\'' +
                 '}';
     }
+
 }

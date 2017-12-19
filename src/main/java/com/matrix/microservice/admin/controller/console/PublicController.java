@@ -96,13 +96,15 @@ public class PublicController {
         }
     }
 
+
     @RequestMapping(value="/logout",method=RequestMethod.GET)
-    public String logout(RedirectAttributes redirectAttributes ){
+    //因为shiro的有自己的logout ，所以不会进该方法 设置方法在\src\main\java\com\geekcattle\conf\shiro\ShiroConfiguration.java//设置退出后url
+    public String logout(RedirectAttributes redirectAttributes){
         //使用权限管理工具进行用户的退出，跳出登录，给出提示信息
         System.out.println("PublicController.logout()");
         SecurityUtils.getSubject().logout();
         redirectAttributes.addFlashAttribute("message", "您已安全退出");
-        return "redirect:/console/login";
+        return "redirect:/console/logout";
     }
 
     @RequestMapping("/403")

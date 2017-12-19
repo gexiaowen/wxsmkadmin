@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="console/header">
+
+</head>
+<body>
+<section class="content-header">
+</section>
+
+<div id="toolbar">
+<input type="hidden" id="link_id" th:value="${szyBusiness.id}" />
+    提出部门：<a th:text="${szyBusiness.branch}"  ></a> &emsp;
+    提出人：<a th:text="${szyBusiness.teller}" ></a>&emsp;
+    责任人：<a th:text="${szyBusiness.zruser}"  ></a>&emsp;
+    要求时间：<a th:text="${szyBusiness.zrtime}" ></a>&emsp;
+    内容：<a th:text="${szyBusiness.bak}" ></a>&emsp;
+    状态：<a th:text="${szyBusiness.status}" ></a>&emsp;
+
+</div>
+
+<section class="content table-content">
+    <table id="dataGrid"></table>
+</section>
+
+<div th:include="console/footer"></div>
+</body>
+<script type="text/javascript">
+    $table = $("#dataGrid");
+    $(function () {
+        initDataGrid();
+        $("div.page-list").css('display','block');
+        $("div.pull-right").css('display','block');
+    });
+    function initDataGrid(){
+        $table.bootstrapTable({
+            height : tableModel.getHeight(),
+            idField : "id",
+            columns : [[
+                {title: "时间", field: "time", sortable: true },
+                {title: "用户", field: "user" },
+                {title: "处理", field: "deal"},
+                {title: "状态", field: "status" },
+                {title: "备注", field: "bak" }
+            ]],
+            url : '/szy/business/view/reportlist',
+            queryParams: function (params){
+                var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                    link_id:  ($("#link_id").val() == '') ? undefined : $("#link_id").val(),
+                    offset:  params.offset,
+                    sort :   params.sort,
+                    order :  params.order,
+                    limit :  params.limit
+                };
+                return temp;
+            },
+            responseHandler : function (res) {
+                return {
+                    rows : res.result.pageInfo.list,
+                    total : res.result.pageInfo.total
+                }
+            },
+            search : false,
+            searchOnEnterKey : false,
+            sortName : 'time',
+            sortOrder : 'asc',
+            pagination : true,
+            sidePagination : 'server',
+            pageSize: 10,
+            pageList : [10, 20, 50, 100],
+            toolbar : "#toolbar",
+            showRefresh : true,
+            showToggle : true
+        });
+    }
+</script>
+</html>

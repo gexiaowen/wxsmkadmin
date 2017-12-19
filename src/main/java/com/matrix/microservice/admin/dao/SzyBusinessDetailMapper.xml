@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.matrix.microservice.admin.dao.SzyBusinessDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.matrix.microservice.admin.entity.szy.SzyBusinessDetail" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <id column="link_id" property="link_id" jdbcType="VARCHAR" />
+    <result column="user" property="user" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="deal" property="deal" jdbcType="VARCHAR" />
+    <result column="bak" property="bak" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectSzyBusinessDetailBySelect" parameterType="java.util.Map" resultMap="BaseResultMap">
+    SELECT id,link_id, user, time, status,deal, bak FROM szy_business_detail WHERE 1=1
+    <if test="link_id != null"> AND link_id=#{link_id}</if>
+  </select>
+</mapper>

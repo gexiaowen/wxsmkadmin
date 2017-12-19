@@ -12,10 +12,11 @@
   </resultMap>
 
   <select id="selectSzyQuestionBySelect" parameterType="java.util.Map" resultMap="BaseResultMap">
-    SELECT id, question, service, child, deal, cruser, crtime FROM szy_question
-    where service LIKE CONCAT('%',#{service},'%') AND child LIKE CONCAT('%',#{child},'%')  and question LIKE CONCAT('%',#{question},'%')
-    order by crtime ${order}
-    limit #{offset},#{limit}
+    SELECT id, question, service, child, deal, cruser, crtime FROM szy_question WHERE 1=1
+    <if test="name != null">AND service LIKE CONCAT('%',#{service},'%')</if>
+    <if test="child != null">AND child LIKE CONCAT('%',#{child},'%')</if>
+    <if test="question != null">AND question LIKE CONCAT('%',#{question},'%')</if>
+    <if test="stime != null">AND date_format(crtime,'%Y%m%d')>=date_format(#{stime},'%Y%m%d') </if>
+    <if test="crtime != null">AND date_format(#{etime},'%Y%m%d')>=date_format(crtime,'%Y%m%d')</if>
   </select>
-
 </mapper>

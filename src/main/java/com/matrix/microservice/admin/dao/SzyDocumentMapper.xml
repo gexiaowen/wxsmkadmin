@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.matrix.microservice.admin.dao.SzyDocumentMapper" >
+  <resultMap id="BaseResultMap" type="com.matrix.microservice.admin.entity.szy.SzyDocument" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="child" property="child" jdbcType="VARCHAR" />
+    <result column="ver" property="ver" jdbcType="VARCHAR" />
+    <result column="size" property="size" jdbcType="VARCHAR" />
+    <result column="cruser" property="cruser" jdbcType="VARCHAR" />
+    <result column="crtime" property="crtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <select id="selectSzyDocumentBySelect" parameterType="java.util.Map" resultMap="BaseResultMap">
+    SELECT id, name, child, ver,size, cruser, crtime FROM szy_document WHERE 1=1
+    <if test="name != null">AND name LIKE CONCAT('%',#{name},'%')</if>
+    <if test="child != null">AND child LIKE CONCAT('%',#{child},'%')</if>
+    <if test="stime != null">AND date_format(crtime,'%Y%m%d')>=date_format(#{stime},'%Y%m%d') </if>
+    <if test="crtime != null">AND date_format(#{etime},'%Y%m%d')>=date_format(crtime,'%Y%m%d')</if>
+  </select>
+</mapper>

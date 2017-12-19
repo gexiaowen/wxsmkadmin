@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.matrix.microservice.admin.dao.SzyBusinessMapper" >
+  <resultMap id="BaseResultMap" type="com.matrix.microservice.admin.entity.szy.SzyBusiness" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="child" property="child" jdbcType="VARCHAR" />
+    <result column="ver" property="ver" jdbcType="VARCHAR" />
+    <result column="branch" property="branch" jdbcType="VARCHAR" />
+    <result column="teller" property="teller" jdbcType="VARCHAR" />
+    <result column="cruser" property="cruser" jdbcType="VARCHAR" />
+    <result column="crtime" property="crtime" jdbcType="TIMESTAMP" />
+    <result column="zruser" property="zruser" jdbcType="VARCHAR" />
+    <result column="zrtime" property="zrtime" jdbcType="TIMESTAMP" />
+    <result column="touser" property="touser" jdbcType="VARCHAR" />
+    <result column="totime" property="totime" jdbcType="TIMESTAMP" />
+    <result column="checkuser" property="checkuser" jdbcType="VARCHAR" />
+    <result column="checktime" property="checktime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="bak" property="bak" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectSzyBusinessBySelectView" parameterType="java.util.Map" resultMap="BaseResultMap">
+    SELECT id, name, child, ver,branch,teller, cruser, crtime,zruser,zrtime,touser,totime,checkuser,checktime,status,bak FROM szy_business WHERE 1=1
+    <if test="name != null">AND name LIKE CONCAT('%',#{name},'%')</if>
+    <if test="child != null">AND child LIKE CONCAT('%',#{child},'%')</if>
+    <if test="ver != null">AND ver LIKE CONCAT('%',#{ver},'%')</if>
+    <if test="branch != null">AND branch LIKE CONCAT('%',#{branch},'%')</if>
+    <if test="zruser != null">AND zruser LIKE CONCAT('%',#{zruser},'%')</if>
+    <if test="stime != null">AND date_format(crtime,'%Y%m%d')>=date_format(#{stime},'%Y%m%d') </if>
+    <if test="crtime != null">AND date_format(#{etime},'%Y%m%d')>=date_format(crtime,'%Y%m%d')</if>
+  </select>
+  <select id="selectSzyBusinessBySelect" parameterType="java.util.Map" resultMap="BaseResultMap">
+    SELECT id, name, child, ver,branch, teller,cruser, crtime,zruser,zrtime,touser,totime,checkuser,checktime,status,bak FROM szy_business WHERE 1=1
+    <if test="name != null">AND name LIKE CONCAT('%',#{name},'%')</if>
+    <if test="child != null">AND child LIKE CONCAT('%',#{child},'%')</if>
+    <if test="ver != null">AND ver LIKE CONCAT('%',#{ver},'%')</if>
+    <if test="branch != null">AND branch LIKE CONCAT('%',#{branch},'%')</if>
+    <if test="zruser != null">AND zruser LIKE CONCAT('%',#{zruser},'%')</if>
+    <if test="stime != null">AND date_format(crtime,'%Y%m%d')>=date_format(#{stime},'%Y%m%d') </if>
+    <if test="crtime != null">AND date_format(#{etime},'%Y%m%d')>=date_format(crtime,'%Y%m%d')</if>
+    AND status!='已删除'
+  </select>
+  <select id="selectSzyBusinessByZruser" parameterType="java.util.Map" resultMap="BaseResultMap">
+    SELECT id, name, child, ver,branch, teller, cruser, crtime,zruser,zrtime,touser,totime,checkuser,checktime,status,bak FROM szy_business WHERE 1=1
+    <if test="name != null">AND name LIKE CONCAT('%',#{name},'%')</if>
+    <if test="child != null">AND child LIKE CONCAT('%',#{child},'%')</if>
+    <if test="ver != null">AND ver LIKE CONCAT('%',#{ver},'%')</if>
+    <if test="zruser != null">AND zruser =#{zruser}</if>
+    <if test="touser != null">AND touser LIKE CONCAT('%',#{touser},'%')</if>
+    <if test="checkuser != null">AND checkuser LIKE CONCAT('%',#{checkuser},'%')</if>
+    <if test="stime != null">AND date_format(crtime,'%Y%m%d')>=date_format(#{stime},'%Y%m%d') </if>
+    <if test="crtime != null">AND date_format(#{etime},'%Y%m%d')>=date_format(crtime,'%Y%m%d')</if>
+    AND status!='已关闭'     AND status!='已删除'
+  </select>
+  <select id="selectSzyBusinessByTouser" parameterType="java.util.Map" resultMap="BaseResultMap">
+    SELECT id, name, child, ver,branch, teller, cruser, crtime,zruser,zrtime,touser,totime,checkuser,checktime,status,bak FROM szy_business WHERE  1=1
+    <if test="name != null">AND name LIKE CONCAT('%',#{name},'%')</if>
+    <if test="child != null">AND child LIKE CONCAT('%',#{child},'%')</if>
+    <if test="ver != null">AND ver LIKE CONCAT('%',#{ver},'%')</if>
+    <if test="touser != null">AND touser =#{touser}</if>
+    <if test="stime != null">AND date_format(crtime,'%Y%m%d')>=date_format(#{stime},'%Y%m%d') </if>
+    <if test="crtime != null">AND date_format(#{etime},'%Y%m%d')>=date_format(crtime,'%Y%m%d')</if>
+    AND status!='已关闭'     AND status!='已删除'  AND status IN ('指派完成，未处理','开始处理','复核失败')
+  </select>
+  <select id="selectSzyBusinessByCheckuser" parameterType="java.util.Map" resultMap="BaseResultMap">
+    SELECT id, name, child, ver,branch, teller, cruser, crtime,zruser,zrtime,touser,totime,checkuser,checktime,status,bak FROM szy_business WHERE 1=1
+    <if test="name != null">AND name LIKE CONCAT('%',#{name},'%')</if>
+    <if test="child != null">AND child LIKE CONCAT('%',#{child},'%')</if>
+    <if test="ver != null"> AND ver LIKE CONCAT('%',#{ver},'%')</if>
+    <if test="checkuser != null">AND checkuser =#{checkuser}</if>
+    <if test="stime != null">AND date_format(crtime,'%Y%m%d')>=date_format(#{stime},'%Y%m%d') </if>
+    <if test="crtime != null">AND date_format(#{etime},'%Y%m%d')>=date_format(crtime,'%Y%m%d')</if>
+    AND status!='已关闭'     AND status!='已删除'  AND status IN ('处理完成','开始复核')
+  </select>
+</mapper>

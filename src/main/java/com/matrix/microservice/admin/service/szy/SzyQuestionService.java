@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * author geekcattle
+ * author szy
  * date 2017/1/6 0006 上午 11:26
  */
 @Service
@@ -43,8 +43,11 @@ public class SzyQuestionService {
 
 
 
-    public List<SzyQuestion> getBySelect(Map map) {
-        return szyQuestionMapper.selectSzyQuestionBySelect(map);
+    public List<SzyQuestion> getBySelect(SzyQuestion szyQuestion) {
+        PageHelper.offsetPage(szyQuestion.getOffset(),
+                szyQuestion.getLimit(),
+                CamelCaseUtil.toUnderlineName(szyQuestion.getSort())+" "+szyQuestion.getOrder());
+        return szyQuestionMapper.selectSzyQuestionBySelect(szyQuestion);
     }
 
 

@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="console/header">
+</head>
+<body>
+<section class="content-header">
+</section>
+
+<div id="toolbar">
+
+    <input type="text" name="child" class="form-control" id="child" placeholder="业务分类" style="width: 100px;display: inline-block;vertical-align: middle;"/>
+    <input type="text" name="name" class="form-control" id="name" placeholder="名称" style="width: 100px;display: inline-block;vertical-align: middle;"/>
+    <input type="text" name="ver" class="form-control" id="ver" placeholder="流水单号" style="width: 100px;display: inline-block;vertical-align: middle;"/>
+
+    <input type="text" class="form-control" id="stime"  onclick="SelectDate(this,'yyyy\/MM\/dd',null,null)" readonly="true" style="width: 110px;display: inline-block;cursor:pointer;vertical-align: middle;" placeholder="录入开始时间"/>
+    <input type="text" class="form-control" id="etime"  onclick="SelectDate(this,'yyyy\/MM\/dd',null,null)" readonly="true" style="width: 110px;display: inline-block;cursor:pointer;vertical-align: middle;" placeholder="录入结束时间"/>
+
+
+    <button class="btn btn-default" type="button" id="refresh" name="refresh" title="Refresh">查询</button>
+    <button class="btn btn-default" type="button" onclick="reset()">重置</button>
+
+</div>
+
+<section class="content table-content">
+    <table id="dataGrid"></table>
+</section>
+
+<div th:include="console/footer"></div>
+</body>
+<script type="text/javascript">
+    $table = $("#dataGrid");
+    $(function () {
+        initDataGrid();
+    });
+    function initDataGrid(){
+        $table.bootstrapTable({
+            height : tableModel.getHeight(),
+            idField : "id",
+            columns : [[
+                {title: "业务分类", field: "child" },
+                {title: "名称", field: "name" , events: operateEvents, formatter: operateFormatter2},
+                {title: "业务流水", field: "ver"},
+                {title: "提出部门", field: "branch" },
+                {title: "提出人", field: "teller" },
+                {title: "责任人", field: "zruser" },
+                {title: "要求时间", field: "zrtime", sortable: true},
+                {title: "处理用户", field: "touser" },
+                {title: "处理时间", field: "totime", sortable: true},
+                {title: "复核用户", field: "checkuser" },
+                {title: "复核时间", field: "checktime", sortable: true},
+                {title: "完成状态", field: "status" },
+                {title: "内容", field: "bak" },
+                {title: "操作", field: "operate", align: 'center', events: operateEvents, formatter: operateFormatter}
+            ]],
+            url : '/szy/business/deal/list',
+            queryParams: function (params){
+                var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                    child:  ($("#child").val() == '') ? undefined : $("#child").val(),
+                    name:  ($("#name").val() == '') ? undefined : $("#name").val(),
+                    ver:  ($("#ver").val() == '') ? undefined : $("#ver").val(),
+                    stime:($("#stime").val() == '') ? undefined : $("#stime").val(),
+                    etime:($("#etime").val() == '') ? undefined : $("#etime").val(),
+                    offset:params.offset,
+                    sort : params.sort,
+                    order :  params.order,
+                    limit :params.limit,
+                };
+                return temp;
+            },
+            responseHandler : function (res) {
+                return {
+                    rows : res.result.pageInfo.list,
+                    total : res.result.pageInfo.total
+                }
+            },
+            search : false,
+            searchOnEnterKey : false,
+            sortName : 'crtime',
+            sortOrder : 'desc',
+            pagination : true,
+            sidePagination : 'server',
+            pageSize: 10,
+            pageList : [10, 20, 50, 100],
+            toolbar : "#toolbar",
+            showRefresh : true,
+            showToggle : true
+        });
+    }
+
+    function operateFormatter2(value, row, index) {
+        return [
+            '<a class="preview" href="javascript:void(0);" >' +value,
+            '</a> ',
+        ].join('');
+    }
+
+    function operateFormatter(value, row, index) {
+            return [
+                '<a class="download" href="javascript:void(0);">',
+                '<i class="glyphicon glyphicon-edit"></i>下载',
+                '</a>  ',
+                '<a class="update" href="javascript:void(0);" >',
+                '<i class="glyphicon glyphicon-edit"></i>处理开始',
+                '</a> <br/> ',
+                '<a class="updateend" href="javascript:void(0);" >',
+                '<i class="glyphicon glyphicon-edit"></i>处理完成并提交报告',
+                '</a>  '
+            ].join('');
+    }
+
+    window.operateEvents = {
+        'click .download': function (e, value, row, index) {
+            window.location='/szy/business/deal/download?id='+row.id;
+        },
+        'click .update' : function (e, value, row, index) {
+            $.post( '/szy/business/deal/save',
+                {id:row.id},
+                function (data) {
+                    if(data.status == 1){
+                        layer.msg(data.msg, {icon: 1}, function () {
+                            $("#refresh").click(); // 父页面table刷新
+                        });
+                    }else{
+                        layer.msg(data.msg, {icon: 1});
+                    }
+                })
+        },
+        'click .updateend' : function (e, value, row, index) {
+            layer.open({
+                type: 2,
+                title: '提交报告',
+                shadeClose: true,
+                shade: [0.1, '#ffffff', false], //遮蔽
+                maxmin: true, //开启最大化最小化按钮
+                area: ['500px', '600px'],
+                content: '/szy/business/deal/from?id='+row.id
+            });
+        },
+        'click .preview' : function (e, value, row, index) {
+            window.open('/static/szy/js/pdf/web/viewer.html?file='+encodeURIComponent('/szy/business/deal/download?id='+row.id ));
+        }
+    };
+
+
+
+    function reset() {
+        $("#child").val('');
+        $("#name").val('');
+        $("#ver").val('');
+        $("#stime").val('');
+        $("#etime").val('');
+
+    }
+
+</script>
+</html>

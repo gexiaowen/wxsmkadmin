@@ -107,7 +107,7 @@ public class AdminShiroRealm extends AuthorizingRealm {
         * 当放到缓存中时，这样的话，doGetAuthorizationInfo就只会执行一次了，
         * 缓存过期之后会再次执行。
         */
-        System.out.println("后台权限校验-->AdminShiroRealm.doGetAuthorizationInfo()");
+        //System.out.println("后台权限校验-->AdminShiroRealm.doGetAuthorizationInfo()");
 
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         Admin userInfo  = (Admin)principals.getPrimaryPrincipal();

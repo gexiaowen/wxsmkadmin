@@ -27,6 +27,7 @@ import org.springframework.context.annotation.DependsOn;
 import javax.servlet.Filter;
 import java.util.*;
 
+import org.apache.shiro.web.filter.authc.LogoutFilter;
 /**
  * Shiro 配置
  *
@@ -183,6 +184,12 @@ public class ShiroConfiguration {
         //拦截器.
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
 
+//设置退出后url  默认为/
+        LogoutFilter logoutFilter = new LogoutFilter();
+        logoutFilter.setRedirectUrl("/console/login");
+        filters.put("logout", logoutFilter);
+        shiroFilterFactoryBean.setFilters(filters);
+
         //配置退出过滤器,其中的具体的退出代码Shiro已经替我们实现了
         /**
          * anon（匿名）  org.apache.shiro.web.filter.authc.AnonymousFilter
@@ -198,6 +205,7 @@ public class ShiroConfiguration {
          * member （用户方面）  org.apache.shiro.web.filter.authc.UserFilter
          * user  表示用户不一定已通过认证,只要曾被Shiro记住过登录状态的用户就可以正常发起请求,比如rememberMe
          */
+
 
         //<!-- 过滤链定义，从上向下顺序执行，一般将 /**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->

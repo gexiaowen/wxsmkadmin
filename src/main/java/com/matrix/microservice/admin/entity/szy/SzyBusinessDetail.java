@@ -5,25 +5,23 @@ import com.matrix.microservice.admin.entity.BaseEntity;
 
 import javax.persistence.*;
 
-@Table(name = "szy_question")
-public class SzyQuestion  extends BaseEntity {
+@Table(name = "szy_business_detail")
+public class SzyBusinessDetail extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
+    private String link_id;
 
-    private String question;
+    private String user;
 
-    private String service;
+    private String time;
 
-    private String child;
+    private String status;
 
     private String deal;
 
-    private String cruser;
-
-    private String crtime;
-
-
+    private String bak;
+    
     @Transient
     @JsonIgnore
     private String stime;
@@ -40,6 +38,19 @@ public class SzyQuestion  extends BaseEntity {
     @JsonIgnore
     private String order = "";
 
+    /**
+     * @return id
+     */
+    public String getLink_id() {
+        return link_id;
+    }
+
+    /**
+     * @param id
+     */
+    public void setLink_id(String link_id) {
+        this.link_id = link_id;
+    }
 
     /**
      * @return id
@@ -54,47 +65,46 @@ public class SzyQuestion  extends BaseEntity {
     public void setId(String id) {
         this.id = id;
     }
-
     /**
-     * @return question
+     * @return user
      */
-    public String getQuestion() {
-        return question;
+    public String getUser() {
+        return user;
     }
 
     /**
-     * @param question
+     * @param user
      */
-    public void setQuestion(String question) {
-        this.question = question;
+    public void setUser(String user) {
+        this.user = user;
     }
 
     /**
-     * @return service
+     * @return time
      */
-    public String getService() {
-        return service;
+    public String getTime() {
+        return time;
     }
 
     /**
-     * @param service
+     * @param time
      */
-    public void setService(String service) {
-        this.service = service;
+    public void setTime(String time) {
+        this.time = time.replace(".0","");;
     }
 
     /**
-     * @return child
+     * @return status
      */
-    public String getChild() {
-        return child;
+    public String getStatus() {
+        return status;
     }
 
     /**
-     * @param child
+     * @param status
      */
-    public void setChild(String child) {
-        this.child = child;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     /**
@@ -112,31 +122,17 @@ public class SzyQuestion  extends BaseEntity {
     }
 
     /**
-     * @return cruser
+     * @return bak
      */
-    public String getCruser() {
-        return cruser;
+    public String getBak() {
+        return bak;
     }
 
     /**
-     * @param cruser
+     * @param bak
      */
-    public void setCruser(String cruser) {
-        this.cruser = cruser;
-    }
-
-    /**
-     * @return crtime
-     */
-    public String getCrtime() {
-        return crtime;
-    }
-
-    /**
-     * @param crtime
-     */
-    public void setCrtime(String crtime) {
-        this.crtime = crtime.replace(".0","");
+    public void setBak(String bak) {
+        this.bak = bak;
     }
 
     public String getSort() {
@@ -173,14 +169,13 @@ public class SzyQuestion  extends BaseEntity {
 
     @Override
     public String toString() {
-        return "SzyQuestion{" +
+        return "SzyBusinessDetail{" +
                 "id='" + id + '\'' +
-                ", question='" + question + '\'' +
-                ", service='" + service + '\'' +
-                ", child='" + child + '\'' +
+                ", user='" + user + '\'' +
+                ", time='" + time + '\'' +
                 ", deal='" + deal + '\'' +
-                ", cruser='" + cruser + '\'' +
-                ", crtime='" + crtime + '\'' +
+                ", status='" + status + '\'' +
+                ", bak='" + bak + '\'' +
                 '}';
     }
 }

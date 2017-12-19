@@ -31,8 +31,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * author geekcattle
- * date 2017/1/6 0006 上午 11:35
+ * author szy
+ * date 2017/11/24
  */
 @Controller
 @RequestMapping("/szy/question")
@@ -54,23 +54,18 @@ public class SzyQuestionController {
         return "szy/question/index";
     }
 
+    @RequiresPermissions("question:index")
     @ResponseBody
     @RequestMapping(value = "/list", method = {RequestMethod.GET})
     public ModelMap list(SzyQuestion szyQuestion) {
         ModelMap map = new ModelMap();
-        Map<String, Object> parammap = new HashMap<String, Object>();
         List<SzyQuestion> Lists=null;
-        if(StringUtils.isEmpty(szyQuestion.getService()) && StringUtils.isEmpty(szyQuestion.getChild()) && StringUtils.isEmpty(szyQuestion.getQuestion())){
+        if(StringUtils.isEmpty(szyQuestion.getService()) && StringUtils.isEmpty(szyQuestion.getChild()) && StringUtils.isEmpty(szyQuestion.getQuestion())
+                && StringUtils.isEmpty(szyQuestion.getStime())&& StringUtils.isEmpty(szyQuestion.getEtime())){
             Lists = szyQuestionService.getPageList(szyQuestion);
         }else {
-            parammap.put("service",StringUtils.isEmpty(szyQuestion.getService())?"":szyQuestion.getService());
-            parammap.put("child",StringUtils.isEmpty(szyQuestion.getChild())?"":szyQuestion.getChild());
-            parammap.put("question",StringUtils.isEmpty(szyQuestion.getQuestion())?"":szyQuestion.getQuestion());
-            parammap.put("order", szyQuestion.getOrder());
-            parammap.put("offset",szyQuestion.getOffset());
-            parammap.put("limit",szyQuestion.getLimit());
 
-            Lists= szyQuestionService.getBySelect(parammap);
+            Lists= szyQuestionService.getBySelect(szyQuestion);
 
 
         }
@@ -81,7 +76,7 @@ public class SzyQuestionController {
     }
 
 
-    @RequiresPermissions("admin:edit")
+    @RequiresPermissions("question:edit")
     @RequestMapping(value = "/from", method = {RequestMethod.GET})
     public String add(SzyQuestion szyQuestion, Model model) {
         if (StringUtils.isEmpty(szyQuestion.getId())) {
@@ -94,7 +89,7 @@ public class SzyQuestionController {
                 szyQuestion.setQuestion(szyQuestion.getQuestion());
                 szyQuestion.setService(szyQuestion.getService());
                 szyQuestion.setChild(szyQuestion.getChild());
-                szyQuestion.setDeal(szyQuestion.getDeal().replaceAll("<br>","\r\n"));
+                szyQuestion.setDeal(szyQuestion.getDeal().replaceAll("<br>","\n"));
                 szyQuestion.setCruser(szyQuestion.getCruser());
                 szyQuestion.setCrtime(szyQuestion.getCrtime());
             }
@@ -104,7 +99,9 @@ public class SzyQuestionController {
         return "szy/question/from";
     }
 
-    @RequiresPermissions("menu:save")
+
+    //弹窗式保存 返回地址为null
+    @RequiresPermissions("question:save")
     @RequestMapping(value = "/save", method = {RequestMethod.POST})
     @Transactional
     @ResponseBody
@@ -112,7 +109,7 @@ public class SzyQuestionController {
         Admin admin = AdminShiroUtil.getUserInfo();
         szyQuestion.setCruser(admin.getUsername());
         szyQuestion.setCrtime(DateUtil.getCurrentTime());
-        szyQuestion.setDeal(szyQuestion.getDeal().replaceAll("\r\n","<br>"));
+        szyQuestion.setDeal(szyQuestion.getDeal().replaceAll("\n","<br>"));
 
         try {
             if (result.hasErrors()) {
@@ -127,14 +124,14 @@ public class SzyQuestionController {
                 szyQuestionService.save(szyQuestion);
             }
 
-            return ReturnUtil.Success("操作成功", null, "/szy/question/index");
+            return ReturnUtil.Success("操作成功", null, null);
         } catch (Exception e) {
             e.printStackTrace();
             return ReturnUtil.Error("操作失败", null, null);
         }
     }
 
-    @RequiresPermissions("admin:delete")
+    @RequiresPermissions("question:delete")
     @RequestMapping(value = "/delete", method = {RequestMethod.GET})
     @ResponseBody
     public ModelMap delete(String[] ids) {
