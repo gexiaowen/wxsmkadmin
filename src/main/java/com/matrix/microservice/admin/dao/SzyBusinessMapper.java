@@ -1,6 +1,6 @@
 package com.matrix.microservice.admin.dao;
 
-import com.matrix.microservice.admin.entity.szy.SzyBusiness;
+import com.matrix.microservice.admin.entity.admin.SzyBusiness;
 import com.matrix.microservice.admin.util.CustomerMapper;
 
 import java.util.List;

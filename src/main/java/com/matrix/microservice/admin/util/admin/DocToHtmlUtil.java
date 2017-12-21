@@ -1,4 +1,4 @@
-package com.matrix.microservice.admin.util.szy;
+package com.matrix.microservice.admin.util.admin;
 
 
 import org.apache.poi.xwpf.converter.core.FileImageExtractor;

@@ -1,22 +1,16 @@
-package com.matrix.microservice.admin.controller.szy.business;
+package com.matrix.microservice.admin.controller.admin.business;
 
 import com.github.pagehelper.PageInfo;
-import com.matrix.microservice.admin.conf.shiro.AdminShiroUtil;
-import com.matrix.microservice.admin.entity.console.Admin;
-import com.matrix.microservice.admin.entity.szy.SzyBusiness;
-import com.matrix.microservice.admin.entity.szy.SzyBusinessDetail;
-import com.matrix.microservice.admin.service.szy.SzyBusinessDetailService;
-import com.matrix.microservice.admin.service.szy.SzyBusinessService;
-import com.matrix.microservice.admin.util.DateUtil;
+import com.matrix.microservice.admin.entity.admin.SzyBusiness;
+import com.matrix.microservice.admin.entity.admin.SzyBusinessDetail;
+import com.matrix.microservice.admin.service.admin.SzyBusinessDetailService;
+import com.matrix.microservice.admin.service.admin.SzyBusinessService;
 import com.matrix.microservice.admin.util.ReturnUtil;
-import com.matrix.microservice.admin.util.UuidUtil;
-import com.matrix.microservice.admin.util.szy.DocToHtmlUtil;
+import com.matrix.microservice.admin.util.admin.DocToHtmlUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,7 +43,7 @@ public class ViewController {
 @RequiresPermissions("businessview:index")
 @RequestMapping(value = "/view/index", method = {RequestMethod.GET})
     public String typingindex(Model model) {
-        return "szy/business/view/index";
+        return "admin/business/view/index";
     }
 
 //list
@@ -88,7 +82,7 @@ public class ViewController {
         }
 
         model.addAttribute("szyBusiness", szyBusiness);
-        return "szy/business/view/report";
+        return "admin/business/view/report";
     }
     //reportlist
     @RequiresPermissions("businessview:index")
@@ -119,7 +113,7 @@ public class ViewController {
         }
 
         model.addAttribute("data", response);
-        return "szy/business/view/download";
+        return "admin/business/view/download";
     }
 
 }

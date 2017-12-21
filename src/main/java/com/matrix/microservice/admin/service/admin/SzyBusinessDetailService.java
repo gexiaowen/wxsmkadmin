@@ -2,20 +2,19 @@
  * Copyright (c) 2017 <l_iupeiyu@qq.com> All rights reserved.
  */
 
-package com.matrix.microservice.admin.service.szy;
+package com.matrix.microservice.admin.service.admin;
 
 import com.github.pagehelper.PageHelper;
-import com.matrix.microservice.admin.entity.szy.SzyBusinessDetail;
+import com.matrix.microservice.admin.entity.admin.SzyBusinessDetail;
 import com.matrix.microservice.admin.dao.SzyBusinessDetailMapper;
 import com.matrix.microservice.admin.util.CamelCaseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 /**
- * author szy
+ * author admin
  * date 2017/1/6 0006 上午 11:26
  */
 @Service

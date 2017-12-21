@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.matrix.microservice.admin.dao.SzyBusinessDetailMapper" >
-  <resultMap id="BaseResultMap" type="com.matrix.microservice.admin.entity.szy.SzyBusinessDetail" >
+  <resultMap id="BaseResultMap" type="com.matrix.microservice.admin.entity.admin.SzyBusinessDetail" >
     <!--
       WARNING - @mbg.generated
     -->

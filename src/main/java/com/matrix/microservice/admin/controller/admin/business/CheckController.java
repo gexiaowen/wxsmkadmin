@@ -1,16 +1,16 @@
-package com.matrix.microservice.admin.controller.szy.business;
+package com.matrix.microservice.admin.controller.admin.business;
 
 import com.github.pagehelper.PageInfo;
 import com.matrix.microservice.admin.conf.shiro.AdminShiroUtil;
 import com.matrix.microservice.admin.entity.console.Admin;
-import com.matrix.microservice.admin.entity.szy.SzyBusiness;
-import com.matrix.microservice.admin.entity.szy.SzyBusinessDetail;
-import com.matrix.microservice.admin.service.szy.SzyBusinessDetailService;
-import com.matrix.microservice.admin.service.szy.SzyBusinessService;
+import com.matrix.microservice.admin.entity.admin.SzyBusiness;
+import com.matrix.microservice.admin.entity.admin.SzyBusinessDetail;
+import com.matrix.microservice.admin.service.admin.SzyBusinessDetailService;
+import com.matrix.microservice.admin.service.admin.SzyBusinessService;
 import com.matrix.microservice.admin.util.DateUtil;
 import com.matrix.microservice.admin.util.ReturnUtil;
 import com.matrix.microservice.admin.util.UuidUtil;
-import com.matrix.microservice.admin.util.szy.DocToHtmlUtil;
+import com.matrix.microservice.admin.util.admin.DocToHtmlUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/szy/business")
@@ -51,7 +49,7 @@ public class CheckController {
 @RequiresPermissions("businesscheck:index")
 @RequestMapping(value = "/check/index", method = {RequestMethod.GET})
     public String typingindex(Model model) {
-        return "szy/business/check/index";
+        return "admin/business/check/index";
     }
 
     //复核开始
@@ -146,7 +144,7 @@ public class CheckController {
         }
 
         model.addAttribute("szyBusiness", szyBusiness);
-        return "szy/business/check/from";
+        return "admin/business/check/from";
     }
 
     //读取文件流
@@ -166,7 +164,7 @@ public class CheckController {
         }
 
         model.addAttribute("data", response);
-        return "szy/business/check/download";
+        return "admin/business/check/download";
     }
 
 }

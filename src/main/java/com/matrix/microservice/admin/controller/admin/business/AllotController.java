@@ -1,16 +1,16 @@
-package com.matrix.microservice.admin.controller.szy.business;
+package com.matrix.microservice.admin.controller.admin.business;
 
 import com.github.pagehelper.PageInfo;
 import com.matrix.microservice.admin.conf.shiro.AdminShiroUtil;
 import com.matrix.microservice.admin.entity.console.Admin;
-import com.matrix.microservice.admin.entity.szy.SzyBusiness;
-import com.matrix.microservice.admin.entity.szy.SzyBusinessDetail;
-import com.matrix.microservice.admin.service.szy.SzyBusinessDetailService;
-import com.matrix.microservice.admin.service.szy.SzyBusinessService;
+import com.matrix.microservice.admin.entity.admin.SzyBusiness;
+import com.matrix.microservice.admin.entity.admin.SzyBusinessDetail;
+import com.matrix.microservice.admin.service.admin.SzyBusinessDetailService;
+import com.matrix.microservice.admin.service.admin.SzyBusinessService;
 import com.matrix.microservice.admin.util.DateUtil;
 import com.matrix.microservice.admin.util.ReturnUtil;
 import com.matrix.microservice.admin.util.UuidUtil;
-import com.matrix.microservice.admin.util.szy.DocToHtmlUtil;
+import com.matrix.microservice.admin.util.admin.DocToHtmlUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/szy/business")
@@ -51,7 +49,7 @@ public class AllotController {
 @RequiresPermissions("businessallot:index")
 @RequestMapping(value = "/allot/index", method = {RequestMethod.GET})
     public String typingindex(Model model) {
-        return "szy/business/allot/index";
+        return "admin/business/allot/index";
     }
 
     //编辑
@@ -75,7 +73,7 @@ public class AllotController {
         }
 
         model.addAttribute("szyBusiness", szyBusiness);
-        return "szy/business/allot/from";
+        return "admin/business/allot/from";
     }
 
     //指派
@@ -180,7 +178,7 @@ public class AllotController {
         }
 
         model.addAttribute("szyBusiness", szyBusiness);
-        return "szy/business/allot/report";
+        return "admin/business/allot/report";
     }
     //reportlist
     @RequiresPermissions("businessallot:index")
@@ -213,7 +211,7 @@ public class AllotController {
         }
 
         model.addAttribute("data", response);
-        return "szy/business/allot/download";
+        return "admin/business/allot/download";
     }
 
 }

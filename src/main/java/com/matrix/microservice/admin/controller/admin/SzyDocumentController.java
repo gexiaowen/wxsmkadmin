@@ -1,10 +1,10 @@
-package com.matrix.microservice.admin.controller.szy;
+package com.matrix.microservice.admin.controller.admin;
 
 import com.github.pagehelper.PageInfo;
 import com.matrix.microservice.admin.conf.shiro.AdminShiroUtil;
 import com.matrix.microservice.admin.entity.console.Admin;
-import com.matrix.microservice.admin.entity.szy.SzyDocument;
-import com.matrix.microservice.admin.service.szy.SzyDocumentService;
+import com.matrix.microservice.admin.entity.admin.SzyDocument;
+import com.matrix.microservice.admin.service.admin.SzyDocumentService;
 import com.matrix.microservice.admin.util.DateUtil;
 import com.matrix.microservice.admin.util.ReturnUtil;
 import com.matrix.microservice.admin.util.UuidUtil;
@@ -23,11 +23,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.*;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import  com.matrix.microservice.admin.util.szy.DocToHtmlUtil;
+import  com.matrix.microservice.admin.util.admin.DocToHtmlUtil;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -49,14 +47,14 @@ public class SzyDocumentController {
 
     @RequestMapping(value = "/index", method = {RequestMethod.GET})
     public String index(Model model) {
-        return "szy/document/index";
+        return "admin/document/index";
     }
 
     //预览文件流
     @RequiresPermissions("document:index")
     @RequestMapping(value = "/viewer", method = {RequestMethod.GET})
     public String viewer(Model model) {
-        return "szy/document/viewer";
+        return "admin/document/viewer";
     }
     @RequiresPermissions("document:index")
     @ResponseBody
@@ -96,7 +94,7 @@ public class SzyDocumentController {
         }
 
         model.addAttribute("szyDocument", szyDocument);
-        return "szy/document/from";
+        return "admin/document/from";
     }
 
 
@@ -163,7 +161,7 @@ public class SzyDocumentController {
         }
 
         model.addAttribute("data", response);
-        return "szy/document/download";
+        return "admin/document/download";
     }
 
 

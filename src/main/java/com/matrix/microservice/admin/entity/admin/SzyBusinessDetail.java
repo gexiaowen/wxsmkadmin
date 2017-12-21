@@ -1,4 +1,4 @@
-package com.matrix.microservice.admin.entity.szy;
+package com.matrix.microservice.admin.entity.admin;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.matrix.microservice.admin.entity.BaseEntity;

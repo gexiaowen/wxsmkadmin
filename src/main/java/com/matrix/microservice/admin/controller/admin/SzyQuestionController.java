@@ -2,12 +2,12 @@
  * Copyright (c) 2017 <l_iupeiyu@qq.com> All rights reserved.
  */
 
-package com.matrix.microservice.admin.controller.szy;
+package com.matrix.microservice.admin.controller.admin;
 
 import com.matrix.microservice.admin.conf.shiro.AdminShiroUtil;
 import com.matrix.microservice.admin.entity.console.Admin;
-import com.matrix.microservice.admin.entity.szy.SzyQuestion;
-import com.matrix.microservice.admin.service.szy.SzyQuestionService;
+import com.matrix.microservice.admin.entity.admin.SzyQuestion;
+import com.matrix.microservice.admin.service.admin.SzyQuestionService;
 import com.matrix.microservice.admin.util.DateUtil;
 import com.matrix.microservice.admin.util.ReturnUtil;
 import com.matrix.microservice.admin.util.UuidUtil;
@@ -26,12 +26,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
- * author szy
+ * author admin
  * date 2017/11/24
  */
 @Controller
@@ -51,7 +49,7 @@ public class SzyQuestionController {
 
     @RequestMapping(value = "/index", method = {RequestMethod.GET})
     public String index(Model model) {
-        return "szy/question/index";
+        return "admin/question/index";
     }
 
     @RequiresPermissions("question:index")
@@ -96,7 +94,7 @@ public class SzyQuestionController {
             }
 
         model.addAttribute("szyQuestion", szyQuestion);
-        return "szy/question/from";
+        return "admin/question/from";
     }
 
 

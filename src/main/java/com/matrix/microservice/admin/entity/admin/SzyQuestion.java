@@ -1,28 +1,28 @@
-package com.matrix.microservice.admin.entity.szy;
+package com.matrix.microservice.admin.entity.admin;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.matrix.microservice.admin.entity.BaseEntity;
 
-import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "szy_document")
-public class SzyDocument extends BaseEntity{
+@Table(name = "szy_question")
+public class SzyQuestion  extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
-    private String name;
+    private String question;
+
+    private String service;
 
     private String child;
 
-    private String ver;
-
-    private String size;
+    private String deal;
 
     private String cruser;
 
     private String crtime;
+
 
     @Transient
     @JsonIgnore
@@ -40,6 +40,7 @@ public class SzyDocument extends BaseEntity{
     @JsonIgnore
     private String order = "";
 
+
     /**
      * @return id
      */
@@ -55,17 +56,31 @@ public class SzyDocument extends BaseEntity{
     }
 
     /**
-     * @return name
+     * @return question
      */
-    public String getName() {
-        return name;
+    public String getQuestion() {
+        return question;
     }
 
     /**
-     * @param name
+     * @param question
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    /**
+     * @return service
+     */
+    public String getService() {
+        return service;
+    }
+
+    /**
+     * @param service
+     */
+    public void setService(String service) {
+        this.service = service;
     }
 
     /**
@@ -83,31 +98,17 @@ public class SzyDocument extends BaseEntity{
     }
 
     /**
-     * @return ver
+     * @return deal
      */
-    public String getVer() {
-        return ver;
+    public String getDeal() {
+        return deal;
     }
 
     /**
-     * @param ver
+     * @param deal
      */
-    public void setVer(String ver) {
-        this.ver = ver;
-    }
-
-    /**
-     * @return size
-     */
-    public String getSize() {
-        return size;
-    }
-
-    /**
-     * @param size
-     */
-    public void setSize(String size) {
-        this.size = size;
+    public void setDeal(String deal) {
+        this.deal = deal;
     }
 
     /**
@@ -172,15 +173,14 @@ public class SzyDocument extends BaseEntity{
 
     @Override
     public String toString() {
-        return "SzyDocument{" +
+        return "SzyQuestion{" +
                 "id='" + id + '\'' +
-                ", name='" + name + '\'' +
+                ", question='" + question + '\'' +
+                ", service='" + service + '\'' +
                 ", child='" + child + '\'' +
-                ", ver='" + ver + '\'' +
-                ", size='" + size + '\'' +
+                ", deal='" + deal + '\'' +
                 ", cruser='" + cruser + '\'' +
                 ", crtime='" + crtime + '\'' +
                 '}';
     }
-
 }
